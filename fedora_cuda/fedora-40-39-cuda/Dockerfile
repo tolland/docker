@@ -1,10 +1,5 @@
-FROM fedora:40
+FROM tolland/fedora:40
 LABEL authors="tolland"
-
-# Update the package manager and install essential tools
-RUN dnf update -y && \
-    dnf install -y \
-      dnf-plugins-core
 
 # Add the NVIDIA CUDA repository
 RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/fedora40/x86_64/cuda-fedora40.repo && \

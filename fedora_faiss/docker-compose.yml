@@ -1,29 +1,13 @@
 ---
 
-name: faiss_fedora
+name: fedora_faiss
 
 
 services:
-  fedora41-cuda-runfile:
-    # container_name: jenkins
-    build:
-      context: ./docker
-      dockerfile: fedora41-cuda-runfile/Dockerfile
-      additional_contexts:
-        cuda_installer: ./cache
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-
   faiss-test:
     # container_name: jenkins
     build:
-      context: ./docker
-      dockerfile: faiss_test/Dockerfile
+      context: ./faiss_test
     deploy:
       resources:
         reservations:

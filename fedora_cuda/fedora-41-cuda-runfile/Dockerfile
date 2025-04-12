@@ -1,15 +1,4 @@
-FROM fedora:41
-LABEL authors="tolland"
-
-# Update the package manager and install essential tools
-RUN dnf update -y && \
-    dnf install -y \
-        dnf-plugins-core \
-        make \
-        gcc-c++ \
-        which \
-        kmod \
-        kernel-devel
+FROM tolland/fedora-builder-kmod:41
 
 WORKDIR /app
 

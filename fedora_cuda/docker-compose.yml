@@ -1,0 +1,49 @@
+---
+
+name: fedora_cuda
+
+# Define the GPU deployment configuration alias
+x-gpu-deploy-config: &gpu-deploy-config
+  deploy:
+    resources:
+      reservations:
+        devices:
+          - driver: nvidia
+            count: all # Use 'all' GPUs for the test
+            capabilities: [gpu]
+
+services:
+
+  cuda-test:
+    <<: *gpu-deploy-config
+    image: tolland/fedora-cuda-test:40
+    build:
+      context: ./context
+      dockerfile: ../fedora-40-cuda-rpm/Dockerfile
+
+  fedora-41-cuda-runfile:
+    <<: *gpu-deploy-config
+    image: tolland/fedora-cuda:41
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-cuda-runfile/Dockerfile
+      additional_contexts:
+        cuda_installer: ./cache
+
+  fedora-41-cuda-rpm:
+    <<: *gpu-deploy-config
+    image: tolland/fedora-cuda-rpm:41
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-cuda-rpm/Dockerfile
+      additional_contexts:
+        cuda_installer: ./cache
+
+  fedora-41-cuda-rpm-min:
+    <<: *gpu-deploy-config
+    image: tolland/fedora-cuda-rpm-min:41
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-cuda-rpm-min/Dockerfile
+      additional_contexts:
+        cuda_installer: ./cache

@@ -1,5 +1,4 @@
 FROM faiss_fedora-fedora41-cuda-runfile:latest
-LABEL authors="tomhodder"
 
 COPY faiss_test/oneAPI.repo /etc/yum.repos.d/oneAPI.repo
 
@@ -33,9 +32,6 @@ ENV CPATH=$MKLROOT/include:$CPATH
 RUN pkg-config --cflags --libs python3
 
 LABEL stage=here
-
-#RUN dnf install -y \
-#  cuda-toolkit
 
 # Build FAISS
 WORKDIR /faiss
