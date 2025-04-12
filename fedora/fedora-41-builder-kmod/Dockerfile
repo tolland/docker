@@ -1,7 +1,7 @@
 FROM tolland/fedora-builder:41
 
 # Install common build tools and development packages
-RUN --mount=type=cache,target=/var/cache/dnf \
+RUN --mount=type=cache,target=/var/cache/libdnf5,sharing=locked \
     dnf install -y \
     make \
     gcc-c++ \

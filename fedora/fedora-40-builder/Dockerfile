@@ -1,7 +1,7 @@
 FROM tolland/fedora:40
 
 # Install common build tools and development packages
-RUN --mount=type=cache,target=/var/cache/dnf \
+RUN --mount=type=cache,target=/var/cache/dnf,sharing=locked \
     dnf install -y \
     autoconf \
     automake \

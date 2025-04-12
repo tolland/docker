@@ -1,8 +1,10 @@
-FROM faiss_fedora-fedora41-cuda-runfile:latest
+FROM tolland/fedora-cuda-rpm:40
 
-COPY faiss_test/oneAPI.repo /etc/yum.repos.d/oneAPI.repo
+COPY oneAPI.repo /etc/yum.repos.d/oneAPI.repo
 
-RUN dnf install -y \
+
+RUN --mount=type=cache,target=/var/cache/dnf,sharing=locked \
+    dnf install -y \
     blas-devel \
     cmake \
     dnf-plugins-core \
@@ -21,7 +23,10 @@ RUN dnf install -y \
 
 
 # Clone FAISS repository
-RUN git clone --depth 1  --single-branch https://github.com/facebookresearch/faiss.git /faiss
+RUN git clone \
+    --depth 1 \
+    --single-branch https://github.com/facebookresearch/faiss.git \
+    /faiss
 
 # Set environment variables for Intel MKL
 ENV MKLROOT=/opt/intel/oneapi/mkl/latest

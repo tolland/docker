@@ -18,15 +18,14 @@ RUN --mount=type=cache,target=/var/cache/dnf,sharing=locked \
 #         --from-repofile https://developer.download.nvidia.com/compute/cuda/repos/fedora41/x86_64/cuda-fedora41.repo
 
 
-RUN --mount=type=cache,target=/var/cache/libdnf5,sharing=locked \
-    dnf install -y \
-    gcc13-c++
-
-
 # Install CUDA toolkit
 RUN --mount=type=cache,target=/var/cache/dnf,sharing=locked \
     dnf install -y \
-    cuda-toolkit
+    cuda-minimal-build-12-6
+
+RUN --mount=type=cache,target=/var/cache/libdnf5,sharing=locked \
+    dnf install -y \
+    gcc13-c++
 
 # Set environment variables for CUDA
 ENV PATH=/usr/local/cuda/bin:${PATH}
@@ -38,5 +37,6 @@ COPY cuda_test.py /usr/local/bin/
 ENV NVCC_CCBIN='g++-13'
 
 RUN nvcc --version
+# RUN python3 /usr/local/bin/cuda_test.py
 
 RUN dnf clean all

@@ -2,7 +2,7 @@ FROM fedora:41
 LABEL authors="tolland"
 
 # Update the package manager and install essential tools
-RUN --mount=type=cache,target=/var/cache/dnf \
+RUN --mount=type=cache,target=/var/cache/libdnf5,sharing=locked \
     dnf update -y && \
     dnf install -y \
       dnf-plugins-core \

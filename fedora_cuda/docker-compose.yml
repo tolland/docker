@@ -14,16 +14,39 @@ x-gpu-deploy-config: &gpu-deploy-config
 
 services:
 
-  cuda-test:
+  fedora-40-cuda-runfile:
+    <<: *gpu-deploy-config
+    image: tolland/fedora-cuda:40
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-40-cuda-runfile/Dockerfile
+      additional_contexts:
+        cuda_installer: ./cache
+
+  fedora-40-cuda-rpm:
     <<: *gpu-deploy-config
     image: tolland/fedora-cuda-test:40
+    pull_policy: build
     build:
       context: ./context
       dockerfile: ../fedora-40-cuda-rpm/Dockerfile
 
-  fedora-41-cuda-runfile:
+  fedora-40-cuda-rpm-min: &service-cuda-test
     <<: *gpu-deploy-config
-    image: tolland/fedora-cuda:41
+    image: tolland/fedora-cuda-rpm-min:40
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-40-cuda-rpm-min/Dockerfile
+
+  cuda-test:
+    <<: *service-cuda-test
+
+  fedora-41-cuda-runfile: &fedora-41-cuda
+    <<: *gpu-deploy-config
+    image: tolland/fedora-cuda-runfile:41
+    pull_policy: build
     build:
       context: ./context
       dockerfile: ../fedora-41-cuda-runfile/Dockerfile
@@ -33,17 +56,19 @@ services:
   fedora-41-cuda-rpm:
     <<: *gpu-deploy-config
     image: tolland/fedora-cuda-rpm:41
+    pull_policy: build
     build:
       context: ./context
       dockerfile: ../fedora-41-cuda-rpm/Dockerfile
-      additional_contexts:
-        cuda_installer: ./cache
 
   fedora-41-cuda-rpm-min:
     <<: *gpu-deploy-config
     image: tolland/fedora-cuda-rpm-min:41
+    pull_policy: build
     build:
       context: ./context
       dockerfile: ../fedora-41-cuda-rpm-min/Dockerfile
-      additional_contexts:
-        cuda_installer: ./cache
+
+  fedora-41-cuda:
+    <<: *fedora-41-cuda
+    image: tolland/fedora-cuda:41
