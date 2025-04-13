@@ -1,0 +1,41 @@
+---
+
+name: base-images
+
+services:
+  fedora-40-base:
+    image: tolland/fedora:40
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-40-base/Dockerfile
+    profiles:
+      - base
+      - f40
+
+  fedora-41-base:
+    image: tolland/fedora:41
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-base/Dockerfile
+    profiles:
+      - base
+
+  ubuntu-20-base:
+    image: tolland/ubuntu-20:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../ubuntu-20-base/Dockerfile
+    profiles:
+      - base
+
+  ubuntu-24-base:
+    image: tolland/ubuntu-24:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../ubuntu-24-base/Dockerfile
+    profiles:
+      - base

@@ -1,0 +1,81 @@
+---
+
+name: fedora_cuda
+
+# Define the GPU deployment configuration alias
+x-gpu-deploy-config: &gpu-deploy-config
+  deploy:
+    resources:
+      reservations:
+        devices:
+          - driver: nvidia
+            count: all # Use 'all' GPUs for the test
+            capabilities: [gpu]
+
+services:
+
+  fedora-40-cuda-runfile:
+    <<: *gpu-deploy-config
+    image: tolland/fedora-40-cuda:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-40-cuda-runfile/Dockerfile
+      additional_contexts:
+        cuda_installer: ./cache
+    profiles:
+      - f40
+
+  fedora-40-cuda-rpm:
+    <<: *gpu-deploy-config
+    image: tolland/fedora-40-cuda-rpm:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-40-cuda-rpm/Dockerfile
+    profiles:
+      - f40
+
+  fedora-40-cuda-rpm-min: &service-cuda-test
+    <<: *gpu-deploy-config
+    image: tolland/fedora-40-cuda-rpm-min:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-40-cuda-rpm-min/Dockerfile
+    profiles:
+      - f40
+
+  cuda-test:
+    image: tolland/fedora-cuda-test:40
+    <<: *service-cuda-test
+
+  fedora-41-cuda-runfile: &fedora-41-cuda
+    <<: *gpu-deploy-config
+    image: tolland/fedora-41-cuda-runfile:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-cuda-runfile/Dockerfile
+      additional_contexts:
+        cuda_installer: ./cache
+
+  fedora-41-cuda-rpm:
+    <<: *gpu-deploy-config
+    image: tolland/fedora-41-cuda-rpm:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-cuda-rpm/Dockerfile
+
+  fedora-41-cuda-rpm-min:
+    <<: *gpu-deploy-config
+    image: tolland/fedora-41-cuda-rpm-min:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-cuda-rpm-min/Dockerfile
+
+  fedora-41-cuda:
+    <<: *fedora-41-cuda
+    image: tolland/fedora-41-cuda:latest

@@ -1,0 +1,82 @@
+---
+
+name: toolchains
+
+services:
+
+  fedora-40-builder:
+    image: tolland/fedora-builder:40
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-40-builder/Dockerfile
+    profiles:
+      - f40
+
+  fedora-40-builder-kmod:
+    image: tolland/fedora-builder-kmod:40
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-40-builder-kmod/Dockerfile
+    profiles:
+      - f40
+
+  fedora-41-builder:
+    image: tolland/fedora-builder:41
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-builder/Dockerfile
+
+  fedora-41-builder-kmod:
+    image: tolland/fedora-41-builder-kmod:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-builder-kmod/Dockerfile
+    depends_on:
+      - fedora-41-builder
+
+  fedora-41-cpp:
+    image: tolland/fedora-41-cpp:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-cpp/Dockerfile
+
+  ubuntu-20-builder:
+    image: tolland/ubuntu-20-builder:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../ubuntu-20-builder/Dockerfile
+
+  ubuntu-20-cpp:
+    image: tolland/ubuntu-20-cpp:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../ubuntu-20-cpp/Dockerfile
+    depends_on:
+      - ubuntu-20-builder
+
+  ubuntu-24-builder:
+    image: tolland/ubuntu-24-builder:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../ubuntu-24-builder/Dockerfile
+
+  ubuntu-24-cpp:
+    image: tolland/ubuntu-24-cpp:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../ubuntu-24-cpp/Dockerfile
+      args:
+        CONTAINER_UID: 1000
+        CONTAINER_GID: 1000
+
+    depends_on:
+      - ubuntu-24-builder

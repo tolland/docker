@@ -1,0 +1,3 @@
+[submodule "fedora_faiss/third_party/faiss"]
+	path = fedora_faiss/third_party/faiss
+	url = https://github.com/facebookresearch/faiss.git
