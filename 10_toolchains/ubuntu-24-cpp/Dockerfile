@@ -23,7 +23,6 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
           dos2unix \
           rsync \
           tar \
-          python3 \
           python3-dev \
           tzdata \
           valgrind \

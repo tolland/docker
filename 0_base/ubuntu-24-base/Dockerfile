@@ -7,10 +7,10 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
         apt-get update && \
         apt-get install -y --no-install-recommends \
+        python3-minimal \
+        python3-pip \
         rsync \
         tar \
-        python3 \
-        python3-pip \
         wget
 
 RUN apt-get clean

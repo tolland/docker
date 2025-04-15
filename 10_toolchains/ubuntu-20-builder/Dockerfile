@@ -22,10 +22,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         valgrind \
         locales-all \
         dos2unix \
-        rsync \
-        tar \
-        python \
-        python-dev \
+        python3 \
+        python3-dev \
         tzdata \
         valgrind \
         wget

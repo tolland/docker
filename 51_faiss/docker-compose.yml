@@ -33,7 +33,7 @@ services:
       dockerfile: ../fedora-41-faiss-builder/Dockerfile
 
   fedora-41-faiss-gpu:
-    image: tolland/fedora-faiss:41
+    image: tolland/fedora-faiss-whl:41
     pull_policy: build
     build:
       context: ./context
@@ -43,12 +43,26 @@ services:
     profiles:
       - build
 
+  fedora-41-faiss-test:
+    <<: *gpu-deploy-config
+    image: tolland/fedora-41-faiss-test:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-faiss-test/Dockerfile
+    depends_on:
+      - fedora-41-faiss-builder
+    profiles:
+      - build
+
   fedora-41-faiss-work:
     image: tolland/fedora-41-faiss-builder:latest
     pull_policy: build
     user: ${FAISS_BUILD_USER:-1000}:${FAISS_BUILD_GROUP:-1000}
+    command: top -b
     volumes:
       - ./third_party/faiss:/faiss:z
       - ./third_party/faiss_install:/app:z
       - ./scripts:/scripts:z
+      - ~/git/faiss-proj:/tmp/faiss-proj:z
       # - ./context/build.sh:/scripts/build.sh:z

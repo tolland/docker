@@ -1,4 +1,4 @@
-FROM tolland/fedora:41
+FROM tolland/fedora-41:latest
 
 # Install common build tools and development packages
 RUN --mount=type=cache,target=/var/cache/libdnf5,sharing=locked \
@@ -20,7 +20,6 @@ RUN --mount=type=cache,target=/var/cache/libdnf5,sharing=locked \
     make \
     ninja-build \
     pkgconf-pkg-config \
-    python3 \
     python3-devel \
     python3-pip \
     python3-setuptools \

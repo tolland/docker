@@ -1,6 +1,5 @@
 FROM tolland/fedora-cuda-rpm:40
 
-
 COPY oneAPI.repo /etc/yum.repos.d/oneAPI.repo
 
 RUN --mount=type=cache,target=/var/cache/dnf,sharing=locked \
@@ -20,14 +19,6 @@ RUN --mount=type=cache,target=/var/cache/dnf,sharing=locked \
     python-pip \
     python3-numpy \
     swig
-
-# Set environment variables for Intel MKL
-ENV MKLROOT=/opt/intel/oneapi/mkl/latest
-ENV LD_LIBRARY_PATH=$MKLROOT/lib/intel64:$LD_LIBRARY_PATH
-ENV LIBRARY_PATH=$MKLROOT/lib/intel64:$LIBRARY_PATH
-ENV CPATH=$MKLROOT/include:$CPATH
-
-
 
 # Clone FAISS repository
 RUN git clone \

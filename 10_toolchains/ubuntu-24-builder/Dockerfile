@@ -7,26 +7,21 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
       apt-get update && \
       apt-get install -y --no-install-recommends  \
-          build-essential \
-          gcc \
-          g++ \
-          clang \
-          gdb \
-          clang \
-          make \
-          ninja-build \
-          cmake \
           autoconf \
           automake \
-          libtool \
-          valgrind \
-          locales-all \
+          build-essential \
+          clang \
+          cmake \
           dos2unix \
-          rsync \
-          tar \
+          g++ \
+          gcc \
+          gdb \
+          libtool \
+          locales-all \
+          make \
+          ninja-build \
           python3-dev \
           tzdata \
-          valgrind \
-          wget
+          valgrind
 
 RUN apt-get clean

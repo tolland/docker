@@ -7,7 +7,7 @@ ARG DEBIAN_FRONTEND="noninteractive" \
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
       apt-get update && \
-      apt-get install -y  \
+      apt-get install -y --no-install-recommends  \
           build-essential \
           gcc \
           g++ \
@@ -23,10 +23,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
           valgrind \
           locales-all \
           dos2unix \
-          rsync \
-          tar \
-          python \
-          python-dev \
+          python3-dev \
           tzdata \
           valgrind \
           wget

@@ -1,4 +1,4 @@
-FROM tolland/fedora-builder-kmod:41
+FROM tolland/fedora-41-builder-kmod:latest
 
 LABEL org.opencontainers.image.title="Fedora 41 C++ Toolchain" \
   org.opencontainers.image.description="This Dockerfile builds a container image for a Fedora 41-based C++ development toolchain. It includes common build tools, compilers, and libraries for C++ development. Is created for clion integration specifically" \

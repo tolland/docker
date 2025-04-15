@@ -23,7 +23,7 @@ services:
       - f40
 
   fedora-41-builder:
-    image: tolland/fedora-builder:41
+    image: tolland/fedora-41-builder:latest
     pull_policy: build
     build:
       context: ./context

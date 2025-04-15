@@ -1,4 +1,4 @@
-FROM tolland/fedora-builder:41
+FROM tolland/fedora-41-builder:latest
 
 # Install common build tools and development packages
 RUN --mount=type=cache,target=/var/cache/libdnf5,sharing=locked \
