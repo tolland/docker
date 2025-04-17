@@ -1,5 +1,7 @@
 FROM tolland/fedora-41-cpp:latest
 
+USER root
+
 # Add the NVIDIA CUDA repository
 RUN --mount=type=cache,target=/var/cache/libdnf5,sharing=locked \
         dnf config-manager \
@@ -9,8 +11,8 @@ RUN --mount=type=cache,target=/var/cache/libdnf5,sharing=locked \
 # Install the CUDA Toolkit
 RUN --mount=type=cache,target=/var/cache/libdnf5,sharing=locked \
     dnf install -y \
-    cuda-minimal-build-12-8 \
-    libcublas-devel-12-8
+        cuda-minimal-build-12-8 \
+        libcublas-devel-12-8
 
 COPY cuda_test.py /usr/local/bin/
 
@@ -26,3 +28,5 @@ ENV LD_LIBRARY_PATH=/usr/local/cuda-12.8/lib64:${LD_LIBRARY_PATH}
 RUN nvcc --version
 
 RUN dnf clean all
+
+USER builder

@@ -15,7 +15,7 @@ x-gpu-deploy-config: &gpu-deploy-config
 
 services:
   fedora-40-faiss:
-    image: tolland/fedora-faiss:40
+    image: tolland/fedora-41-faiss-gpu:latest
     pull_policy: build
     build:
       context: ./context
@@ -32,16 +32,16 @@ services:
       context: ./context
       dockerfile: ../fedora-41-faiss-builder/Dockerfile
 
-  fedora-41-faiss-gpu:
-    image: tolland/fedora-faiss-whl:41
-    pull_policy: build
-    build:
-      context: ./context
-      dockerfile: ../fedora-41-gpu/Dockerfile
-    depends_on:
-      - fedora-41-faiss-builder
-    profiles:
-      - build
+#  fedora-41-faiss-gpu:
+#    image: tolland/fedora-41-faiss-whl:latest
+#    pull_policy: build
+#    build:
+#      context: ./context
+#      dockerfile: ../fedora-41-gpu/Dockerfile
+#    depends_on:
+#      - fedora-41-faiss-builder
+#    profiles:
+#      - build
 
   fedora-41-faiss-test:
     <<: *gpu-deploy-config
@@ -66,3 +66,48 @@ services:
       - ./scripts:/scripts:z
       - ~/git/faiss-proj:/tmp/faiss-proj:z
       # - ./context/build.sh:/scripts/build.sh:z
+
+  fedora-41-faiss-no-gpu:
+    image: tolland/fedora-41-faiss-no-gpu:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-git-checkout/Dockerfile
+    command: top -b
+    depends_on:
+      - fedora-41-faiss-builder
+    volumes:
+      - /srv/image_builder/build:/build/faiss-builder/build
+    profiles:
+      - build
+
+  fedora-41-faiss-gpu:
+    <<: *gpu-deploy-config
+    image: tolland/fedora-41-faiss-gpu:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-git-checkout/Dockerfile
+    command: top -b
+    depends_on:
+      - fedora-41-faiss-builder
+    volumes:
+      - /srv/image_builder/build:/build/faiss-builder/build
+    profiles:
+      - build
+
+  fedora-41-faiss-build:
+    image: tolland/fedora-41-faiss-git-checkout:latest
+    pull_policy: build
+    build:
+      context: ./context
+      dockerfile: ../fedora-41-git-checkout/Dockerfile
+    command: top -b
+    volumes:
+      - type: bind
+        source: ${PWD}/build/dists
+        target: /build/faiss-builder/build/dists:z
+        bind:
+          selinux: z
+    profiles:
+      - build

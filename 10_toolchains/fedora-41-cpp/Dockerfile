@@ -1,5 +1,7 @@
 FROM tolland/fedora-41-builder-kmod:latest
 
+USER root
+
 LABEL org.opencontainers.image.title="Fedora 41 C++ Toolchain" \
   org.opencontainers.image.description="This Dockerfile builds a container image for a Fedora 41-based C++ development toolchain. It includes common build tools, compilers, and libraries for C++ development. Is created for clion integration specifically" \
   org.opencontainers.image.version="1.0" \
@@ -33,3 +35,5 @@ RUN --mount=type=cache,target=/var/cache/libdnf5,sharing=locked \
     wget
 
 RUN dnf clean all
+
+USER builder

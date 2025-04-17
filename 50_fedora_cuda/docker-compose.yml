@@ -61,7 +61,6 @@ services:
         cuda_installer: ./cache
 
   fedora-41-cuda-rpm:
-    <<: *gpu-deploy-config
     image: tolland/fedora-41-cuda-rpm:latest
     pull_policy: build
     build:
@@ -69,7 +68,6 @@ services:
       dockerfile: ../fedora-41-cuda-rpm/Dockerfile
 
   fedora-41-cuda-rpm-min:
-    <<: *gpu-deploy-config
     image: tolland/fedora-41-cuda-rpm-min:latest
     pull_policy: build
     build:

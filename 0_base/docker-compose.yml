@@ -31,17 +31,17 @@ services:
     profiles:
       - base
 
-  fedora-41-base:
-    image: tolland/fedora:41
-    pull_policy: build
-    build:
-      context: ./context
-      dockerfile: ../fedora-41-base/Dockerfile
-    profiles:
-      - base
+  # fedora-41-base:
+  #   image: tolland/fedora-base:41
+  #   pull_policy: build
+  #   build:
+  #     context: ./context
+  #     dockerfile: ../fedora-41-base/Dockerfile
+  #   profiles:
+  #     - base
 
-  fedora-41:
-    image: tolland/fedora-41:latest
+  fedora-41-base:
+    image: tolland/fedora-41-base:latest
     pull_policy: build
     build:
       context: ./context
