@@ -12,6 +12,7 @@ RUN --mount=type=cache,target=/var/cache/libdnf5,sharing=locked \
     automake \
     binutils \
     bison \
+    ccache \
     clang \
     cmake \
     dos2unix \
